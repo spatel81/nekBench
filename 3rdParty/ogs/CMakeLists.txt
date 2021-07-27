@@ -26,7 +26,7 @@ set(ogslib-src
   src/oogs.cpp 
 )
 
-add_library(ogs STATIC ${ogslib-src})
+add_library(ogs SHARED ${ogslib-src})
 
 target_include_directories(ogs 
   PUBLIC
@@ -38,7 +38,11 @@ target_include_directories(ogs
 target_link_libraries(ogs PUBLIC MPI::MPI_C libocca gs)
 set_target_properties(ogs PROPERTIES PUBLIC_HEADER ogs.hpp)
 
-target_compile_definitions(ogs PUBLIC 
-  "USE_NEW_PINNED_MALLOC=1"
-  "DOGS=\"${PROJECT_SOURCE_DIR}\""
+target_compile_definitions(ogs 
+  PUBLIC 
+    "USE_NEW_PINNED_MALLOC=1"
+    "DOGS=\"${CMAKE_INSTALL_PREFIX}}\""
 )
+
+install(TARGETS ogs LIBRARY DESTINATION lib)
+install(DIRECTORY okl/ DESTINATION okl)
