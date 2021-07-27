@@ -10,8 +10,8 @@ target_link_libraries(axhelm
   PUBLIC
     MPI::MPI_C 
     libocca
-    ${BLAS_LIBRARIES} 
-    ${LAPACK_LIBRARIES}
+    BLAS::BLAS
+    LAPACK::LAPACK
 )
 
 add_compile_definitions(axhelm PUBLIC "DBP=\"\"")

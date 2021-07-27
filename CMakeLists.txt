@@ -1,11 +1,14 @@
-project(nekBench)
-set(nekBench VERSION 0.1)
 cmake_minimum_required(VERSION 3.0)
+project(nekBench VERSION 0.1)
 
 enable_language(C)
 enable_language(CXX)
 enable_language(Fortran)
 enable_testing()
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 include(GNUInstallDirs)
 include(FortranCInterface)
 
