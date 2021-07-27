@@ -14,11 +14,11 @@ if(USE_MPI)
     find_package(MPI)
 endif()
 
-# option(USE_VENDOR_BLASLAPACK "Use an external vendor-provided Blas/Lapack library" OFF)
-# if(USE_VENDOR_BLASLAPACK)
-# find_package(BLAS)
-# find_package(LAPACK)
-# endif()
+option(VENDOR_BLASLAPACK "Use an external vendor-provided Blas/Lapack library" OFF)
+if(VENDOR_BLASLAPACK)
+  find_package(BLAS)
+  find_package(LAPACK)
+endif()
 
 add_compile_definitions(
     "USE_OCCA_MEM_BYTE_ALIGN=64"
@@ -36,6 +36,6 @@ add_compile_definitions(
     "MPI_HLONG=MPI_LONG_LONG_INT"
 ) 
 
-# add_subdirectory(3rdParty)
+add_subdirectory(3rdParty)
 # add_subdirectory(axhelm)
 # add_subdirectory(nekBone)
