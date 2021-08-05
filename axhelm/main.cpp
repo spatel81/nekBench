@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef _OPENMP
 #include "omp.h"
+#endif
 #include <unistd.h>
 #include "mpi.h"
 #include "occa.hpp"
@@ -27,7 +29,7 @@ int main(int argc, char** argv)
 {
   if(argc < 6) {
     printf(
-      "Usage: ./axhelm N Ndim numElements [NATIVE|OKL]+SERIAL|CUDA|HIP|OPENCL CPU|VOLTA [BKmode] [nRepetitions] [kernelVersion]\n");
+      "Usage: ./axhelm N Ndim numElements [NATIVE|OKL]+SERIAL|CUDA|HIP|OPENCL|DPCPP CPU|VOLTA|DPCPP [BKmode] [nRepetitions] [kernelVersion]\n");
     return 1;
   }
 
@@ -82,22 +84,26 @@ int main(int argc, char** argv)
   }else if(strstr(threadModel.c_str(),  "HIP")) {
     sprintf(deviceConfig, "mode: 'HIP', device_id: %d",deviceId);
   }else if(strstr(threadModel.c_str(),  "OPENCL")) {
-    sprintf(deviceConfig, "mode: 'OpenCL', device_id: %d, platform_id: %d", deviceId, platformId);
+    sprintf(deviceConfig, "{mode: 'OpenCL', device_id: %d, platform_id: %d}", deviceId, platformId);
+  }else if(strstr(threadModel.c_str(),  "DPCPP")) {
+    sprintf(deviceConfig, "{mode: 'dpcpp', device_id: %d, platform_id: %d}", deviceId, platformId);
   }else if(strstr(threadModel.c_str(),  "OPENMP")) {
     sprintf(deviceConfig, "mode: 'OpenMP' ");
   }else {
     sprintf(deviceConfig, "mode: 'Serial' ");
+  #ifdef _OPENMP
     omp_set_num_threads(1);
+  #endif
   }
 
   int Nthreads {1};
   #ifdef _OPENMP
     Nthreads = omp_get_max_threads();
   #endif
-  
+
   std::string deviceConfigString(deviceConfig);
   device.setup(deviceConfigString);
-  occa::env::OCCA_MEM_BYTE_ALIGN = USE_OCCA_MEM_BYTE_ALIGN;
+  // occa::env::OCCA_MEM_BYTE_ALIGN = USE_OCCA_MEM_BYTE_ALIGN;
 
   if(rank == 0) {
     std::cout << "word size: " << sizeof(dfloat) << " bytes\n";

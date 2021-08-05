@@ -5,7 +5,7 @@ static void setCompilerFlags(occa::device device, occa::properties &kernelInfo)
     kernelInfo["compiler_flags"] += " --prec-div=false ";
     kernelInfo["compiler_flags"] += " --prec-sqrt=false ";
     kernelInfo["compiler_flags"] += " --use_fast_math ";
-    kernelInfo["compiler_flags"] += " --fmad=false ";
+    kernelInfo["compiler_flags"] += " --fmad=false "; //Is this intentional?
   }
 
   if(device.mode() == "OpenCL") { // add backend compiler optimization for OPENCL

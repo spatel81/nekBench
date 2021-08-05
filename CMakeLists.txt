@@ -17,10 +17,19 @@ if(USE_MPI)
     find_package(MPI)
 endif()
 
-option(VENDOR_BLASLAPACK "Use an external vendor-provided Blas/Lapack library" OFF)
-if(VENDOR_BLASLAPACK)
+option(EXTERNAL_BLASLAPACK "Use an external/vendor-provided Blas/Lapack library" OFF)
+if(EXTERNAL_BLASLAPACK)
   find_package(BLAS)
   find_package(LAPACK)
+endif()
+
+option(EXTERNAL_OCCA "Use an external OCCA build" OFF)
+if(EXTERNAL_OCCA)
+  find_library(OCCA_LIBRARY_PATH NAMES occa libocca PATHS $ENV{OCCA_DIR}/lib)
+  find_path(OCCA_INCLUDE_PATH NAMES occa.hpp occa.h PATHS $ENV{OCCA_DIR}/include)
+  add_library(libocca UNKNOWN IMPORTED)
+  set_target_properties(libocca PROPERTIES IMPORTED_LOCATION ${OCCA_LIBRARY_PATH})
+  target_include_directories(libocca INTERFACE ${OCCA_INCLUDE_PATH})
 endif()
 
 add_compile_definitions(
@@ -28,17 +37,18 @@ add_compile_definitions(
     "dfloat=double"
     "dfloatString=\"double\""
     "dfloatFormat=\"%lf\""
-    "dlong=int"
-    "dlongString=\"int\""
-    "dlongFormat=\"%d\""
+    "dlong=long int"
+    "dlongString=\"long int\""
+    "dlongFormat=\"%ld\""
     "hlong=long long int"
     "hlongString=\"long long int\""
     "hlongFormat=\"%lld\""
     "MPI_DFLOAT=MPI_DOUBLE"
-    "MPI_DLONG=MPI_INT"
+    "MPI_DLONG=MPI_LONG_INT"
     "MPI_HLONG=MPI_LONG_LONG_INT"
 ) 
 
 add_subdirectory(3rdParty)
 add_subdirectory(axhelm)
+#add_subdirectory(gs)
 # add_subdirectory(nekBone)
