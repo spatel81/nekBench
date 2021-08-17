@@ -193,10 +193,10 @@ void mygsSetup(ogs_t* ogs)
 
   if(Nhalo == 0) return;
   occa::properties props;
-  props["mapped"] = true;
+  props["host"] = true;
 
   h_buffSend = ogs->device.malloc(pwd->comm[send].total * unit_size, props);
-  bufSend = (unsigned char*)h_buffSend.ptr(props);
+  bufSend = (unsigned char*)h_buffSend.ptr();
   scatterOffsets = (int*) calloc(2 * Nhalo,sizeof(int));
   scatterIds = (int*) calloc(pwd->comm[send].total,sizeof(int));
   convertMap(pwd->map[send], scatterOffsets, scatterIds);
@@ -206,7 +206,7 @@ void mygsSetup(ogs_t* ogs)
   o_scatterIds = ogs->device.malloc(pwd->comm[send].total * sizeof(int), scatterIds);
 
   h_buffRecv = ogs->device.malloc(pwd->comm[recv].total * unit_size, props);
-  bufRecv = (unsigned char*)h_buffRecv.ptr(props);
+  bufRecv = (unsigned char*)h_buffRecv.ptr();
   gatherOffsets  = (int*) calloc(2 * Nhalo,sizeof(int));
   gatherIds  = (int*) calloc(pwd->comm[recv].total,sizeof(int));
   convertMap(pwd->map[recv], gatherOffsets, gatherIds);
@@ -466,7 +466,7 @@ void mygsStart(occa::memory o_v, const char* type, const char* op, ogs_t* ogs, o
       if (ogs::o_haloBuf.size()) ogs::o_haloBuf.free();
 
       occa::properties props;
-      props["mapped"] = true;
+      props["host"] = true;
       ogs::o_haloBuf = ogs->device.malloc(ogs->NhaloGather * Nbytes, props);
       ogs::haloBuf = ogs::o_haloBuf.ptr();
     }

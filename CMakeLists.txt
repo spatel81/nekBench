@@ -12,6 +12,19 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 include(GNUInstallDirs)
 include(FortranCInterface)
 
+set(dfloat "double")
+set(dfloatString "\"double\"")
+set(dfloatFormat "\"%lf\"")
+set(dlong "long int")
+set(dlongString "\"long int\"")
+set(dlongFormat="\"%ld\"")
+set(hlong "long long int")
+set(hlongString "\"long long int\"")
+set(hlongFormat "\"%lld\"")
+set(MPI_DFLOAT "MPI_DOUBLE")
+set(MPI_DLONG "MPI_LONG_INT")
+set(MPI_HLONG "MPI_LONG_LONG_INT")
+
 option(USE_MPI "Use the MPI library." ON)
 if(USE_MPI)
     find_package(MPI)
@@ -37,18 +50,18 @@ add_compile_definitions(
     "dfloat=double"
     "dfloatString=\"double\""
     "dfloatFormat=\"%lf\""
-    "dlong=long int"
-    "dlongString=\"long int\""
-    "dlongFormat=\"%ld\""
+    "MPI_DFLOAT=MPI_DOUBLE"
+    "dlong=int"
+    "dlongString=\"int\""
+    "dlongFormat=\"%d\""
+    "MPI_DLONG=MPI_INT"
     "hlong=long long int"
     "hlongString=\"long long int\""
     "hlongFormat=\"%lld\""
-    "MPI_DFLOAT=MPI_DOUBLE"
-    "MPI_DLONG=MPI_LONG_INT"
     "MPI_HLONG=MPI_LONG_LONG_INT"
 ) 
 
 add_subdirectory(3rdParty)
 add_subdirectory(axhelm)
-#add_subdirectory(gs)
+add_subdirectory(gs)
 # add_subdirectory(nekBone)

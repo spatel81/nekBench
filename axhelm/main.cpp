@@ -60,7 +60,10 @@ int main(int argc, char** argv)
   if(argc >= 9)
     kernelVersion = atoi(argv[8]);
 
-  const int deviceId = 0;
+  int deviceId = 0;
+  if(1 < size) {
+    deviceId = rank;
+  }
   const int platformId = 0;
 
   const int Nq = N + 1;

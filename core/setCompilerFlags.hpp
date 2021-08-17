@@ -10,7 +10,6 @@ static void setCompilerFlags(occa::device device, occa::properties &kernelInfo)
 
   if(device.mode() == "OpenCL") { // add backend compiler optimization for OPENCL
     kernelInfo["compiler_flags"] += " -cl-std=CL2.0 ";
-    kernelInfo["compiler_flags"] += " -cl-strict-aliasing ";
     kernelInfo["compiler_flags"] += " -cl-mad-enable ";
     kernelInfo["compiler_flags"] += " -cl-no-signed-zeros ";
     kernelInfo["compiler_flags"] += " -cl-unsafe-math-optimizations ";
