@@ -45,7 +45,7 @@ target_compile_definitions(ogs
 )
 
 install(TARGETS ogs 
-  LIBRARY DESTINATION lib 
+  LIBRARY DESTINATION lib
   PUBLIC_HEADER DESTINATION include
 )
 install(DIRECTORY okl/ DESTINATION okl)

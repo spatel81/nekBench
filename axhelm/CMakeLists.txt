@@ -14,10 +14,7 @@ target_link_libraries(axhelm
     LAPACK::LAPACK
 )
 
-target_compile_definitions(axhelm 
-  PUBLIC 
-    "DBP=\"\""
-)
+add_compile_definitions(axhelm PUBLIC "DBP=\"\"")
 
 install(TARGETS axhelm RUNTIME DESTINATION ".")
 install(DIRECTORY kernel/ DESTINATION kernel)

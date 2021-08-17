@@ -61,8 +61,3 @@ cmake -S . -B ${BUILD_DIR} \
 
 cmake --build ${BUILD_DIR} --parallel 4 && \
 cmake --install ${BUILD_DIR} --prefix ${INSTALL_DIR}
-
-# mkdir -p ${INSTALL_DIR}
-# cmake --install build/3rdParty/occa --prefix ${INSTALL_DIR}/occa
-# cmake --install build/axhelm --prefix ${INSTALL_DIR}
-# cmake --install build/nekBone --prefix ${INSTALL_DIR}

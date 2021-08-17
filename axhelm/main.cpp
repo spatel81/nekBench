@@ -103,7 +103,6 @@ int main(int argc, char** argv)
   #ifdef _OPENMP
     Nthreads = omp_get_max_threads();
   #endif
-
   std::string deviceConfigString(deviceConfig);
   device.setup(deviceConfigString);
   // occa::env::OCCA_MEM_BYTE_ALIGN = USE_OCCA_MEM_BYTE_ALIGN;
