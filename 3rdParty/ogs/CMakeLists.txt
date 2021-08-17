@@ -41,8 +41,11 @@ set_target_properties(ogs PROPERTIES PUBLIC_HEADER ogs.hpp)
 target_compile_definitions(ogs 
   PUBLIC 
     "USE_NEW_PINNED_MALLOC=1"
-    "DOGS=\"${CMAKE_INSTALL_PREFIX}}\""
+    "DOGS=\"${CMAKE_INSTALL_PREFIX}\""
 )
 
-install(TARGETS ogs LIBRARY DESTINATION lib)
+install(TARGETS ogs 
+  LIBRARY DESTINATION lib
+  PUBLIC_HEADER DESTINATION include
+)
 install(DIRECTORY okl/ DESTINATION okl)

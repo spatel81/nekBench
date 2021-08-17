@@ -16,7 +16,7 @@ PREFIX_PATHS=
 : ${MPICXX:="mpicxx"}
 : ${MPIFC:="mpif77"}
 
-: ${VENDOR_BLASLAPACK:="OFF"}
+: ${EXTERNAL_BLASLAPACK:="OFF"}
 
 # OCCA Configuration
 : ${ENABLE_DPCPP:="ON"}
@@ -29,6 +29,7 @@ PREFIX_PATHS=
 
 cmake -S . -B ${BUILD_DIR} \
   -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
+  -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
   -DCMAKE_PREFIX_PATH=${PREFIX_PATHS} \
   -DCMAKE_C_COMPILER=${CC} \
   -DCMAKE_CXX_COMPILER=${CXX} \
@@ -36,7 +37,7 @@ cmake -S . -B ${BUILD_DIR} \
   -DMPI_C_COMPILER=${MPICC} \
   -DMPI_CXX_COMPILER=${MPICXX} \
   -DMPI_Fortran_COMPILER=${MPIFC} \
-  -DVENDOR_BLASLAPACK=${VENDOR_BLASLAPACK} \
+  -DEXTERNAL_BLASLAPACK=${EXTERNAL_BLASLAPACK} \
   -DENABLE_DPCPP=${ENABLE_DPCPP} \
   -DENABLE_OPENCL=${ENABLE_OPENCL} \
   -DENABLE_CUDA=${ENABLE_CUDA} \
@@ -47,8 +48,3 @@ cmake -S . -B ${BUILD_DIR} \
 
 cmake --build ${BUILD_DIR} --parallel 4 && \
 cmake --install ${BUILD_DIR} --prefix ${INSTALL_DIR}
-
-# mkdir -p ${INSTALL_DIR}
-# cmake --install build/3rdParty/occa --prefix ${INSTALL_DIR}/occa
-# cmake --install build/axhelm --prefix ${INSTALL_DIR}
-# cmake --install build/nekBone --prefix ${INSTALL_DIR}
