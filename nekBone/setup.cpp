@@ -169,7 +169,7 @@ void solveSetup(BP_t* BP, occa::properties &kernelInfo)
   occa::properties props = kernelInfo;
   props["host"] = true;
   p_tmp = mesh->device.malloc(2*Nblock * sizeof(dfloat), props);
-  BP->tmp  = (dfloat*)p_tmp.ptr(props);
+  BP->tmp  = (dfloat*)p_tmp.ptr();
   BP->o_tmp = mesh->device.malloc(2*Nblock * sizeof(dfloat), BP->tmp);
 
   BP->o_tmp2 = mesh->device.malloc(Nblock2 * sizeof(dfloat), BP->tmp);
@@ -235,52 +235,52 @@ void solveSetup(BP_t* BP, occa::properties &kernelInfo)
   for (int r = 0; r < 2; r++) {
     if ((r == 0 && mesh->rank == 0) || (r == 1 && mesh->rank > 0)) {
       mesh->addScalarKernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl",
+        mesh->device.buildKernel(DBP "kernel/utils.okl",
                                  "addScalar",
                                  kernelInfo);
 
       mesh->maskKernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl",
+        mesh->device.buildKernel(DBP "kernel/utils.okl",
                                  "mask",
                                  kernelInfo);
 
       mesh->sumKernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl",
+        mesh->device.buildKernel(DBP "kernel/utils.okl",
                                  "sum",
                                  kernelInfo);
 
       BP->innerProductKernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl", "innerProduct", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/utils.okl", "innerProduct", kernelInfo);
 
       BP->multipleInnerProduct2Kernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl", "multipleInnerProduct2", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/utils.okl", "multipleInnerProduct2", kernelInfo);
  
       BP->weightedNorm2Kernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl", "weightedNorm2", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/utils.okl", "weightedNorm2", kernelInfo);
 
       BP->weightedMultipleNorm2Kernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl", "weightedMultipleNorm2", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/utils.okl", "weightedMultipleNorm2", kernelInfo);
 
       BP->scaledAddKernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl", "scaledAdd", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/utils.okl", "scaledAdd", kernelInfo);
 
       BP->dotMultiplyKernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl", "dotMultiply", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/utils.okl", "dotMultiply", kernelInfo);
 
       BP->vecCopyKernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl", "vecCopy", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/utils.okl", "vecCopy", kernelInfo);
 
       BP->vecInvKernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl", "vecInv", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/utils.okl", "vecInv", kernelInfo);
 
       BP->vecScaleKernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl", "vecScale", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/utils.okl", "vecScale", kernelInfo);
 
       BP->updatePCGKernel =
-        mesh->device.buildKernel(DBP "/kernel/utils.okl", "BPUpdatePCG", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/utils.okl", "BPUpdatePCG", kernelInfo);
 
       BP->updateJacobiKernel =
-        mesh->device.buildKernel(DBP "/kernel/updateJacobi.okl", "updateJacobi", kernelInfo);
+        mesh->device.buildKernel(DBP "kernel/updateJacobi.okl", "updateJacobi", kernelInfo);
 
       // add custom defines
       kernelInfo["defines/" "p_NpP"] = (mesh->Np + mesh->Nfp * mesh->Nfaces);
@@ -291,7 +291,7 @@ void solveSetup(BP_t* BP, occa::properties &kernelInfo)
       occa::properties props = kernelInfo;
       if(strstr(threadModel.c_str(), "NATIVE")) props["okl/enabled"] = false;
 
-      string fileName = DBP "/kernel/utils.okl";
+      string fileName = DBP "kernel/utils.okl";
       if(strstr(threadModel.c_str(),
                 "NATIVE+SERIAL") || strstr(threadModel.c_str(), "NATIVE+OPENMP"))
         fileName = "kernel/" + arch + "/weightedInnerProduct.c";
@@ -303,7 +303,7 @@ void solveSetup(BP_t* BP, occa::properties &kernelInfo)
       BP->weightedInnerProductUpdateKernel = 
         mesh->device.buildKernel(fileName.c_str(), "weightedInnerProductUpdate", props);
 
-      occa::kernel nothingKernel = mesh->device.buildKernel(DBP "/kernel/utils.okl", "nothingKernel", kernelInfo);
+      occa::kernel nothingKernel = mesh->device.buildKernel(DBP "kernel/utils.okl", "nothingKernel", kernelInfo);
 
       nothingKernel();
     }
