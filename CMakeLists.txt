@@ -17,8 +17,8 @@ if(USE_MPI)
     find_package(MPI)
 endif()
 
-option(VENDOR_BLASLAPACK "Use an external vendor-provided Blas/Lapack library" OFF)
-if(VENDOR_BLASLAPACK)
+option(EXTERNAL_BLASLAPACK "Use an external vendor-provided Blas/Lapack library" OFF)
+if(EXTERNAL_BLASLAPACK)
   find_package(BLAS)
   find_package(LAPACK)
 endif()
@@ -41,4 +41,4 @@ add_compile_definitions(
 
 add_subdirectory(3rdParty)
 add_subdirectory(axhelm)
-# add_subdirectory(nekBone)
+add_subdirectory(nekBone)
