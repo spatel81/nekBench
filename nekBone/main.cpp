@@ -1,4 +1,6 @@
-#include "omp.h"
+#ifdef _OPENMP
+  #include "omp.h"
+#endif
 #include "BP.hpp"
 
 int solve(BP_t* BP,
@@ -84,10 +86,6 @@ int main(int argc, char** argv)
 
   // set up
   occa::properties kernelInfo;
-  //kernelInfo["defines"].asObject();
-  //kernelInfo["includes"].asArray();
-  //kernelInfo["header"].asArray();
-  //kernelInfo["flags"].asObject();
 
   meshOccaSetup3D(mesh, options, kernelInfo);
   BP_t* BP = setup(mesh, kernelInfo, options);
@@ -199,7 +197,10 @@ int main(int argc, char** argv)
       int knlId = 0;
       options.getArgs("KERNEL ID", knlId);
 
-      int Nthreads =  omp_get_max_threads();
+      int Nthreads{1};
+  #ifdef _OPENMP
+      Nthreads = omp_get_max_threads();
+  #endif
       cout << "\nsummary\n"
            << "  MPItasks     : " << mesh->size << "\n";
       if(options.compareArgs("THREAD MODEL", "OPENMP"))
