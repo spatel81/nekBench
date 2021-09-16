@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <omp.h>
+#ifdef _OPENMP
+  #include <omp.h>
+#endif
 
 #include <list>
 #include <algorithm>
@@ -266,7 +268,10 @@ int main(int argc, char** argv)
     for(int i = 0; i < Ntimer; i++) etime[i] = std::max(etime[i],0.0) / Ntests;
 
     if(mesh->rank == 0) {
-      int Nthreads =  omp_get_max_threads();
+      int Nthreads =  1;
+      #ifdef _OPENMP
+        Nthreads = omp_get_max_threads();
+      #endif
       cout << "\nsummary\n"
            << "  ogsMode                       : " << ogs_mode_enum << "\n"
            << "  MPItasks                      : " << mesh->size << "\n";

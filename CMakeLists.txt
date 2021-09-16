@@ -41,4 +41,5 @@ add_compile_definitions(
 
 add_subdirectory(3rdParty)
 add_subdirectory(axhelm)
+add_subdirectory(gs)
 add_subdirectory(nekBone)

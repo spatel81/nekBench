@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "omp.h"
+#ifdef _OPENMP
+  #include "omp.h"
+#endif
 #include <unistd.h>
 #include "mpi.h"
 #include "occa.hpp"
@@ -87,7 +89,9 @@ int main(int argc, char** argv)
     sprintf(deviceConfig, "mode: 'OpenMP' ");
   }else {
     sprintf(deviceConfig, "mode: 'Serial' ");
+  #ifdef _OPENMP
     omp_set_num_threads(1);
+  #endif
   }
 
   int Nthreads {1};
