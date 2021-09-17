@@ -1,0 +1,8 @@
+#%Module
+module-whatis {}
+
+prepend-path PATH @CMAKE_INSTALL_PREFIX@/bin
+prepend-path LD_LIBRARY_PATH @CMAKE_INSTALL_PREFIX@/lib
+
+setenv NEKBENCH_ROOT @CMAKE_INSTALL_PREFIX@
+

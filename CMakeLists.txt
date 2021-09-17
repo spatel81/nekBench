@@ -43,3 +43,8 @@ add_subdirectory(3rdParty)
 add_subdirectory(axhelm)
 add_subdirectory(gs)
 add_subdirectory(nekBone)
+
+configure_file(
+  ${CMAKE_SOURCE_DIR}/modulefiles/nekbench
+  ${CMAKE_INSTALL_PREFIX}/modulefiles/nekbench
+)
