@@ -202,26 +202,23 @@ int main(int argc, char** argv)
       Nthreads = omp_get_max_threads();
   #endif
       cout << "\nsummary\n"
-           << "  MPItasks     : " << mesh->size << "\n";
-      if(options.compareArgs("THREAD MODEL", "OPENMP"))
-        cout <<  "  OMPthreads   : " << Nthreads << "\n";
-      cout << "  polyN        : " << N << "\n"
-           << "  Nelements    : " << globalNelements << "\n"
-           << "  Nfields      : " << BP->Nfields << "\n"
-           << "  iterations   : " << it << "\n"
-           << "  Nrepetitions : " << Ntests << "\n"
-           << "  elapsed time : " << Ntests * elapsed << " s\n"
-           << "  throughput   : " << gDOFs << " GDOF/s/iter\n"
-           << "  bandwidth    : " << bw << " GB/s\n"
-           << "  GFLOPS/s     : " << gFlops << endl;
+           << "\tMPItasks           : " << mesh->size << "\n"
+           << "\tpolyN              : " << N << "\n"
+           << "\tNelements          : " << globalNelements << "\n"
+           << "\tNfields            : " << BP->Nfields << "\n"
+           << "\titerations         : " << it << "\n"
+           << "\tNrepetitions       : " << Ntests << "\n"
+           << "\tAvg. iteration time: " << elapsed / it << " s\n"
+           << std::endl;
+           
 
       if(BP->profiling)
         cout << "\nbreakdown\n"
-             << "  local Ax  : " << etime[0] << " s\n"
-             << "  gs        : " << etime[1] << " s\n"
-             << "  updatePCG : " << etime[2] << " s\n"
-             << "  dot       : " << etime[3] << " s\n"
-             << "  preco     : " << etime[4] << " s\n"
+             << "\tlocal Ax  : " << etime[0] << " s\n"
+             << "\tgs        : " << etime[1] << " s\n"
+             << "\tupdatePCG : " << etime[2] << " s\n"
+             << "\tdot       : " << etime[3] << " s\n"
+             << "\tpreco     : " << etime[4] << " s\n"
              << endl;
     }
   }

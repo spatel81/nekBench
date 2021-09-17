@@ -1,6 +1,7 @@
 static void setCompilerFlags(occa::device device, occa::properties &kernelInfo)
 {
   if(device.mode() == "CUDA") { // add backend compiler optimization for CUDA
+    kernelInfo["compiler_flags"] += " -O3";
     kernelInfo["compiler_flags"] += " --ftz=true ";
     kernelInfo["compiler_flags"] += " --prec-div=false ";
     kernelInfo["compiler_flags"] += " --prec-sqrt=false ";

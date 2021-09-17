@@ -1,7 +1,11 @@
 #!/bin/bash
 set -x
 #-----
-PREFIX_PATHS=
+BUILD_TYPE=Release
+PREFIX_PATHS="${NVHPC_ROOT}/cuda;${NVHPC_ROOT}/math_libs"
+
+CXXFLAGS="-pgf90libs"
+ENABLE_OPENMP="OFF"
 
 # Default build parameters
 : ${BUILD_DIR:=`pwd`/build}
@@ -27,6 +31,8 @@ PREFIX_PATHS=
 : ${ENABLE_METAL="OFF"}
 : ${ENABLE_MPI="OFF"}
 
+rm -rf ${BUILD_DIR} ${INSTALL_DIR}
+
 cmake -S . -B ${BUILD_DIR} \
   -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
   -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
@@ -34,6 +40,7 @@ cmake -S . -B ${BUILD_DIR} \
   -DCMAKE_C_COMPILER=${CC} \
   -DCMAKE_CXX_COMPILER=${CXX} \
   -DCMAKE_Fortran_COMPILER=${FC} \
+  -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
   -DMPI_C_COMPILER=${MPICC} \
   -DMPI_CXX_COMPILER=${MPICXX} \
   -DMPI_Fortran_COMPILER=${MPIFC} \

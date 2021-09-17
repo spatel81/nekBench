@@ -3258,6 +3258,8 @@ void occaDeviceConfig(mesh_t* mesh, setupAide &options)
   } else {
     options.getArgs("DEVICE NUMBER",device_id);
   }
+  //device_id = device_id % 8;
+  //device_id = device_id % 4;
 
   occa::properties deviceProps;
 
